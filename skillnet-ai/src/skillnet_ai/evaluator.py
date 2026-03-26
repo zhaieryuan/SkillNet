@@ -14,12 +14,6 @@ from tqdm import tqdm
 
 from skillnet_ai.downloader import SkillDownloader
 from skillnet_ai.prompts import SKILL_EVALUATION_PROMPT
-from skillnet_ai.providers import (
-    resolve_provider_config,
-    clamp_temperature,
-    postprocess_response,
-    ProviderPreset,
-)
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +38,6 @@ class EvaluatorConfig:
     include_script_results: bool = False
     max_script_output_chars: int = 400
     github_token: Optional[str] = None
-    provider: Optional[str] = None
 
 
 @dataclass
@@ -711,23 +704,12 @@ class PromptBuilder:
 
 class LLMClient:
     """Thin wrapper around the OpenAI client for evaluation calls."""
-
+    
     def __init__(self, config: EvaluatorConfig):
-        cfg = resolve_provider_config(
-            provider=config.provider,
-            api_key=config.api_key,
-            base_url=config.base_url,
-            model=config.model,
-        )
-        self.client = OpenAI(api_key=cfg["api_key"], base_url=cfg["base_url"])
-        self.model = cfg["model"]
-        self._preset: Optional[ProviderPreset] = cfg["preset"]
-
-        temperature = config.temperature
-        if self._preset:
-            temperature = clamp_temperature(temperature, self._preset)
-        self.temperature = temperature
-
+        self.client = OpenAI(api_key=config.api_key, base_url=config.base_url)
+        self.model = config.model
+        self.temperature = config.temperature
+    
     def evaluate(self, prompt: str) -> Dict[str, Any]:
         """Call the LLM with the given prompt and parse JSON response."""
         messages = [
@@ -741,7 +723,7 @@ class LLMClient:
             },
             {"role": "user", "content": prompt}
         ]
-
+        
         try:
             response = self.client.chat.completions.create(
                 model=self.model,
@@ -750,8 +732,6 @@ class LLMClient:
                 temperature=self.temperature
             )
             raw_response = response.choices[0].message.content
-            if self._preset:
-                raw_response = postprocess_response(raw_response, self._preset)
             return json.loads(raw_response)
         except Exception as e:
             logger.error(f"LLM call failed: {e}")
