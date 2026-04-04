@@ -165,26 +165,56 @@ cat ./agent_skills/relationships.json
 
 ## 🔧 环境变量配置
 
-### 基础配置（搜索和下载公开技能）
+### 快速配置（3 步）
 
-无需配置，开箱即用！
-
-### 高级配置（创建、评估、分析）
-
-创建 `.env` 文件：
+#### 1️⃣ 复制配置模板
 
 ```bash
-# OpenAI API Key（必需）
-API_KEY=sk-...
+cp .env.example .env
+```
 
-# 可选配置
-BASE_URL=https://api.openai.com/v1
-GITHUB_TOKEN=ghp_...
+#### 2️⃣ 编辑 .env 文件
+
+```bash
+vim .env  # 或使用您喜欢的编辑器
+```
+
+#### 3️⃣ 填写必需配置
+
+**最小配置**（仅搜索和下载）：
+```bash
+# 无需配置，开箱即用！
+```
+
+**基础配置**（创建和评估功能）：
+```env
+API_KEY=sk-your-openai-api-key-here
 SKILLNET_MODEL=gpt-4o
+```
+
+**完整配置**（最佳体验）：
+```env
+API_KEY=sk-your-openai-api-key-here
+SKILLNET_MODEL=gpt-4o
+GITHUB_TOKEN=ghp-your-github-token-here
 GITHUB_MIRROR=https://ghfast.top/
 ```
 
-在 Python 中使用：
+### 主要环境变量
+
+| 变量 | 必需 | 说明 |
+|------|------|------|
+| `API_KEY` | 部分* | OpenAI API Key（创建/评估/分析需要） |
+| `SKILLNET_MODEL` | 否 | LLM 模型（默认 gpt-4o） |
+| `GITHUB_TOKEN` | 否 | GitHub Token（强烈推荐） |
+| `GITHUB_MIRROR` | 否 | GitHub 镜像（国内推荐） |
+| `BASE_URL` | 否 | API 基础 URL（代理/第三方服务） |
+| `HOST` | 否 | API 服务器地址（默认 0.0.0.0） |
+| `PORT` | 否 | API 服务器端口（默认 8000） |
+
+*仅在使用 create/evaluate/analyze 功能时必需
+
+### 在代码中使用
 
 ```python
 from dotenv import load_dotenv
@@ -193,6 +223,17 @@ load_dotenv()  # 自动加载 .env 文件
 from skillnet_ai import SkillNetClient
 client = SkillNetClient()  # 自动读取环境变量
 ```
+
+### 📖 详细配置指南
+
+查看完整的环境变量配置说明：**[ENV_SETUP.md](ENV_SETUP.md)**
+
+包含：
+- 🔑 如何获取 API Key 和 GitHub Token
+- 🤖 模型选择指南（推荐模型、成本对比）
+- 💡 配置示例（最小配置、国内环境、企业环境）
+- ❓ 常见问题解答
+- 🔐 安全最佳实践
 
 ---
 

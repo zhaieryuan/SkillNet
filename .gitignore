@@ -3,3 +3,27 @@ __pycache__/
 skill_downloads/
 download_skill*
 .DS_Store
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Python build
+*.egg-info/
+dist/
+build/
+*.pyc
+*.pyo
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Generated files
+uv.lock
