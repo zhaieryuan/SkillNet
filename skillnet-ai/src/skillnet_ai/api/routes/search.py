@@ -13,14 +13,14 @@ router = APIRouter(prefix="/api/v1/skills", tags=["Search"])
 @router.get("/search", response_model=SearchResponse)
 async def search_skills(
     q: str = Query(..., description="搜索查询（关键词或自然语言）"),
-    mode: str = Query("keyword", regex="^(keyword|vector)$", description="搜索模式"),
+    mode: str = Query("keyword", pattern="^(keyword|vector)$", description="搜索模式"),
     category: Optional[str] = Query(None, description="按类别过滤"),
     limit: int = Query(20, ge=1, le=100, description="返回结果数量"),
     page: int = Query(1, ge=1, description="页码（仅 keyword 模式）"),
     min_stars: int = Query(0, ge=0, description="最小 Star 数（仅 keyword 模式）"),
     sort_by: str = Query(
         "stars",
-        regex="^(stars|recent)$",
+        pattern="^(stars|recent)$",
         description="排序方式（仅 keyword 模式）",
     ),
     threshold: float = Query(
