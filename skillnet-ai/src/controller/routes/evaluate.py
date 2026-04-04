@@ -1,9 +1,9 @@
 """评估技能端点"""
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, HTTPException
 
 from skillnet_ai import SkillNetClient
-from controller.dependencies import get_api_key
+from controller.dependencies import get_skillnet_client, validate_api_key_for_operation
 from controller.models import EvaluateRequest, EvaluateResponse
 
 router = APIRouter(prefix="/api/v1/skills", tags=["Evaluate"])
@@ -12,16 +12,20 @@ router = APIRouter(prefix="/api/v1/skills", tags=["Evaluate"])
 @router.post("/evaluate", response_model=EvaluateResponse)
 async def evaluate_skill(
     request: EvaluateRequest,
-    api_key: str = Depends(get_api_key),
 ) -> EvaluateResponse:
     """
     评估技能质量
 
     使用 LLM 对技能进行多维度质量评估。
 
-    ## 认证
+    ## 环境变量
 
-    需要 `X-API-Key` header（OpenAI API Key）
+    需要配置 `API_KEY` 环境变量（OpenAI API Key）
+
+    在 `.env` 文件中配置：
+    ```
+    API_KEY=sk-your-openai-api-key-here
+    ```
 
     ## 评估维度
 
@@ -52,7 +56,6 @@ async def evaluate_skill(
     ```bash
     curl -X POST "http://localhost:8000/api/v1/skills/evaluate" \\
       -H "Content-Type: application/json" \\
-      -H "X-API-Key: sk-..." \\
       -d '{
         "target": "./my_skills/pdf-parser",
         "name": "PDF Parser",
@@ -82,8 +85,11 @@ async def evaluate_skill(
     ```
     """
     try:
-        # 创建客户端
-        client = SkillNetClient(api_key=api_key)
+        # 验证 API_KEY 已配置
+        validate_api_key_for_operation("Evaluate skill")
+
+        # 创建客户端（自动从环境变量读取配置）
+        client = get_skillnet_client()
 
         # 评估技能
         evaluation = client.evaluate(

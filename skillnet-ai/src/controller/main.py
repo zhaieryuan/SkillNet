@@ -20,11 +20,28 @@ app = FastAPI(
     - 📊 **评估技能**: 5 维度质量评估（安全性、完整性、可执行性、可维护性、成本意识）
     - 🕸️ **分析关系**: 分析技能之间的关系（相似、归属、组合、依赖）
 
-    ### 认证
+    ### 环境变量配置
 
-    部分端点需要 API Key 认证：
-    - 使用 `X-API-Key` header 传递 OpenAI API Key
-    - 可选 `X-GitHub-Token` header 用于 GitHub 操作
+    服务器自动从环境变量读取配置（在 `.env` 文件中配置）：
+
+    **创建、评估、分析功能需要**：
+    - `API_KEY`: OpenAI API Key
+
+    **可选配置**：
+    - `GITHUB_TOKEN`: GitHub Token（提高速率限制）
+    - `GITHUB_MIRROR`: GitHub 镜像 URL（国内加速）
+    - `SKILLNET_MODEL`: 默认 LLM 模型（默认 gpt-4o）
+    - `BASE_URL`: API 基础 URL（代理/第三方服务）
+
+    配置示例：
+    ```
+    API_KEY=sk-your-openai-api-key-here
+    SKILLNET_MODEL=gpt-4o
+    GITHUB_TOKEN=ghp-your-github-token-here
+    GITHUB_MIRROR=https://ghfast.top/
+    ```
+
+    详见：[ENV_SETUP.md](../../../ENV_SETUP.md)
 
     ### 在线平台
 

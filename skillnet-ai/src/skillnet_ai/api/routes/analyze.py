@@ -2,10 +2,10 @@
 
 import os
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, HTTPException
 
 from skillnet_ai import SkillNetClient
-from skillnet_ai.api.dependencies import get_api_key
+from skillnet_ai.api.dependencies import get_skillnet_client, validate_api_key_for_operation
 from skillnet_ai.api.models import AnalyzeRequest, AnalyzeResponse
 
 router = APIRouter(prefix="/api/v1/skills", tags=["Analyze"])
@@ -14,16 +14,20 @@ router = APIRouter(prefix="/api/v1/skills", tags=["Analyze"])
 @router.post("/analyze", response_model=AnalyzeResponse)
 async def analyze_skills(
     request: AnalyzeRequest,
-    api_key: str = Depends(get_api_key),
 ) -> AnalyzeResponse:
     """
     分析技能关系
 
     使用 LLM 分析多个技能之间的关系。
 
-    ## 认证
+    ## 环境变量
 
-    需要 `X-API-Key` header（OpenAI API Key）
+    需要配置 `API_KEY` 环境变量（OpenAI API Key）
+
+    在 `.env` 文件中配置：
+    ```
+    API_KEY=sk-your-openai-api-key-here
+    ```
 
     ## 关系类型
 
@@ -51,7 +55,6 @@ async def analyze_skills(
     ```bash
     curl -X POST "http://localhost:8000/api/v1/skills/analyze" \\
       -H "Content-Type: application/json" \\
-      -H "X-API-Key: sk-..." \\
       -d '{
         "skills_dir": "./my_skills",
         "save_to_file": true
@@ -83,8 +86,11 @@ async def analyze_skills(
     ```
     """
     try:
-        # 创建客户端
-        client = SkillNetClient(api_key=api_key)
+        # 验证 API_KEY 已配置
+        validate_api_key_for_operation("Analyze skill relationships")
+
+        # 创建客户端（自动从环境变量读取配置）
+        client = get_skillnet_client()
 
         # 分析技能关系
         relationships = client.analyze(

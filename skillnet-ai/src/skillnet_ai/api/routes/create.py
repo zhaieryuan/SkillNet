@@ -8,7 +8,7 @@ from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 
 from skillnet_ai import SkillNetClient
 from skillnet_ai.api.background_tasks import create_task
-from skillnet_ai.api.dependencies import get_api_key, get_github_token
+from skillnet_ai.api.dependencies import get_skillnet_client, validate_api_key_for_operation
 from skillnet_ai.api.models import (
     CreatePromptRequest,
     CreateGitHubRequest,
@@ -21,16 +21,20 @@ router = APIRouter(prefix="/api/v1/skills/create", tags=["Create"])
 @router.post("/prompt", response_model=TaskResponse, status_code=202)
 async def create_from_prompt(
     request: CreatePromptRequest,
-    api_key: str = Depends(get_api_key),
 ) -> TaskResponse:
     """
     从自然语言提示创建技能
 
     使用 LLM 根据自然语言描述生成技能代码。
 
-    ## 认证
+    ## 环境变量
 
-    需要 `X-API-Key` header（OpenAI API Key）
+    需要配置 `API_KEY` 环境变量（OpenAI API Key）
+
+    在 `.env` 文件中配置：
+    ```
+    API_KEY=sk-your-openai-api-key-here
+    ```
 
     ## 参数
 
@@ -47,7 +51,6 @@ async def create_from_prompt(
     ```bash
     curl -X POST "http://localhost:8000/api/v1/skills/create/prompt" \\
       -H "Content-Type: application/json" \\
-      -H "X-API-Key: sk-..." \\
       -d '{
         "prompt": "创建一个图片压缩工具",
         "output_dir": "./generated_skills"
@@ -55,8 +58,11 @@ async def create_from_prompt(
     ```
     """
     try:
-        # 创建客户端
-        client = SkillNetClient(api_key=api_key)
+        # 验证 API_KEY 已配置
+        validate_api_key_for_operation("Create skill from prompt")
+
+        # 创建客户端（自动从环境变量读取配置）
+        client = get_skillnet_client()
 
         # 创建后台任务
         task_id = create_task(
@@ -82,18 +88,22 @@ async def create_from_prompt(
 @router.post("/github", response_model=TaskResponse, status_code=202)
 async def create_from_github(
     request: CreateGitHubRequest,
-    api_key: str = Depends(get_api_key),
-    github_token: Optional[str] = Depends(get_github_token),
 ) -> TaskResponse:
     """
     从 GitHub 仓库创建技能
 
     分析 GitHub 仓库代码并生成技能。
 
-    ## 认证
+    ## 环境变量
 
-    - 必需: `X-API-Key` header（OpenAI API Key）
-    - 可选: `X-GitHub-Token` header（用于访问私有仓库）
+    - 必需: `API_KEY` - OpenAI API Key
+    - 可选: `GITHUB_TOKEN` - 用于访问私有仓库和提高速率限制
+
+    在 `.env` 文件中配置：
+    ```
+    API_KEY=sk-your-openai-api-key-here
+    GITHUB_TOKEN=ghp-your-github-token-here
+    ```
 
     ## 参数
 
@@ -111,8 +121,6 @@ async def create_from_github(
     ```bash
     curl -X POST "http://localhost:8000/api/v1/skills/create/github" \\
       -H "Content-Type: application/json" \\
-      -H "X-API-Key: sk-..." \\
-      -H "X-GitHub-Token: ghp_..." \\
       -d '{
         "github_url": "https://github.com/owner/repo",
         "output_dir": "./generated_skills"
@@ -120,8 +128,11 @@ async def create_from_github(
     ```
     """
     try:
-        # 创建客户端
-        client = SkillNetClient(api_key=api_key, github_token=github_token)
+        # 验证 API_KEY 已配置
+        validate_api_key_for_operation("Create skill from GitHub")
+
+        # 创建客户端（自动从环境变量读取配置）
+        client = get_skillnet_client()
 
         # 创建后台任务
         task_id = create_task(
@@ -150,16 +161,20 @@ async def create_from_trajectory(
     trajectory_file: UploadFile = File(..., description="执行轨迹文件（.txt）"),
     output_dir: str = Form("./generated_skills", description="生成技能的输出目录"),
     model: str = Form("gpt-4o", description="使用的 LLM 模型"),
-    api_key: str = Depends(get_api_key),
 ) -> TaskResponse:
     """
     从执行轨迹文件创建技能
 
     根据 Agent 执行轨迹生成技能代码。
 
-    ## 认证
+    ## 环境变量
 
-    需要 `X-API-Key` header（OpenAI API Key）
+    需要配置 `API_KEY` 环境变量（OpenAI API Key）
+
+    在 `.env` 文件中配置：
+    ```
+    API_KEY=sk-your-openai-api-key-here
+    ```
 
     ## 参数
 
@@ -175,12 +190,14 @@ async def create_from_trajectory(
 
     ```bash
     curl -X POST "http://localhost:8000/api/v1/skills/create/trajectory" \\
-      -H "X-API-Key: sk-..." \\
       -F "trajectory_file=@trajectory.txt" \\
       -F "output_dir=./generated_skills"
     ```
     """
     try:
+        # 验证 API_KEY 已配置
+        validate_api_key_for_operation("Create skill from trajectory")
+
         # 验证文件类型
         if not trajectory_file.filename.endswith(".txt"):
             raise HTTPException(
@@ -198,8 +215,8 @@ async def create_from_trajectory(
         with open(tmp_path, "r", encoding="utf-8") as f:
             trajectory_content = f.read()
 
-        # 创建客户端
-        client = SkillNetClient(api_key=api_key)
+        # 创建客户端（自动从环境变量读取配置）
+        client = get_skillnet_client()
 
         # 创建后台任务
         task_id = create_task(
@@ -232,16 +249,20 @@ async def create_from_office(
     office_file: UploadFile = File(..., description="Office 文档（.pdf/.docx/.pptx）"),
     output_dir: str = Form("./generated_skills", description="生成技能的输出目录"),
     model: str = Form("gpt-4o", description="使用的 LLM 模型"),
-    api_key: str = Depends(get_api_key),
 ) -> TaskResponse:
     """
     从 Office 文档创建技能
 
     从 PDF、Word 或 PowerPoint 文档中提取信息并生成技能。
 
-    ## 认证
+    ## 环境变量
 
-    需要 `X-API-Key` header（OpenAI API Key）
+    需要配置 `API_KEY` 环境变量（OpenAI API Key）
+
+    在 `.env` 文件中配置：
+    ```
+    API_KEY=sk-your-openai-api-key-here
+    ```
 
     ## 参数
 
@@ -257,12 +278,14 @@ async def create_from_office(
 
     ```bash
     curl -X POST "http://localhost:8000/api/v1/skills/create/office" \\
-      -H "X-API-Key: sk-..." \\
       -F "office_file=@tutorial.pdf" \\
       -F "output_dir=./generated_skills"
     ```
     """
     try:
+        # 验证 API_KEY 已配置
+        validate_api_key_for_operation("Create skill from office document")
+
         # 验证文件类型
         allowed_extensions = [".pdf", ".docx", ".doc", ".pptx", ".ppt"]
         file_ext = os.path.splitext(office_file.filename)[1].lower()
@@ -279,8 +302,8 @@ async def create_from_office(
             tmp.write(content)
             tmp_path = tmp.name
 
-        # 创建客户端
-        client = SkillNetClient(api_key=api_key)
+        # 创建客户端（自动从环境变量读取配置）
+        client = get_skillnet_client()
 
         # 创建后台任务
         task_id = create_task(
