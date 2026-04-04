@@ -18,7 +18,15 @@
       "Bash(ls -la /Users/zhai/my_project/pycharm_workspaces/SkillNet/*.md)",
       "Bash(PORT=8080 python:*)",
       "Bash(python -m json.tool)",
-      "Bash(pkill:*)"
+      "Bash(pkill:*)",
+      "Bash(python:*)",
+      "Bash(.venv/bin/python:*)",
+      "Bash(/Users/zhai/my_project/pycharm_workspaces/SkillNet/.venv/bin/python:*)",
+      "Bash(export PORT=8080)",
+      "Bash(curl -s \"http://localhost:8080/api/v1/skills/search?q=pdf&limit=3\")",
+      "Bash(curl -s -X POST http://localhost:8080/api/v1/skills/create/prompt -H 'Content-Type: application/json' -d '{\"prompt\": \"create a test skill for demonstration\"}')",
+      "Bash(curl -s \"http://localhost:8080/docs\")",
+      "Bash(curl -s \"http://localhost:8080/openapi.json\")"
     ]
   }
 }

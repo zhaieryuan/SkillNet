@@ -3,9 +3,13 @@
 import os
 from typing import Optional
 
+from dotenv import load_dotenv
 from fastapi import HTTPException
 
 from skillnet_ai import SkillNetClient
+
+# 加载 .env 文件中的环境变量
+load_dotenv()
 
 
 def get_skillnet_client() -> SkillNetClient:

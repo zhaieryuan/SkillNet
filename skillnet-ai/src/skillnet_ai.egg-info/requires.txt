@@ -9,3 +9,6 @@ pycryptodome>=3.23.0
 python-docx>=1.2.0
 python-pptx>=1.0.2
 json-repair>=0.30.0
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+python-multipart>=0.0.6
