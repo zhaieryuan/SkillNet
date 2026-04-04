@@ -1,0 +1,2 @@
+[console_scripts]
+skillnet = skillnet_ai.cli:app

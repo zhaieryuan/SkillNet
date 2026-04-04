@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1f497b48-0757-4e1b-a507-f71ea118fb28" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/博客_翻译版.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/奇哥分享的原文文档.pdf" afterDir="false" />
+    <list default="true" id="1f497b48-0757-4e1b-a507-f71ea118fb28" name="Changes" comment="feat : 学习文档">
+      <change beforePath="$PROJECT_DIR$/.claude/settings.local.json" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/settings.local.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skillnet-ai/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/skillnet-ai/pyproject.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +48,7 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+    <configuration name="run_api" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="SkillNet" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -62,8 +63,8 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="DEBUG_JUST_MY_CODE" value="false" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="RUN_TOOL" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/run_api.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -90,12 +91,25 @@
       <updated>1775291434423</updated>
       <workItem from="1775291435598" duration="665000" />
       <workItem from="1775293777203" duration="100000" />
-      <workItem from="1775293884505" duration="2032000" />
+      <workItem from="1775293884505" duration="5328000" />
     </task>
+    <task id="LOCAL-00001" summary="feat : 学习文档">
+      <option name="closed" value="true" />
+      <created>1775296160059</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1775296160059</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat : 学习文档" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat : 学习文档" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -1,7 +1,20 @@
 {
   "permissions": {
     "allow": [
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "Bash(uv:*)",
+      "Bash(ls -lh *.md *.py)",
+      "Bash(curl -I http://skillnet.openkg.cn/)",
+      "Bash(curl -s http://localhost:8080/health)",
+      "Bash(jq)",
+      "Bash(curl -s http://localhost:8080/)",
+      "Bash(curl -s http://localhost:8080/docs)",
+      "Bash(curl -s http://localhost:8080/openapi.json)",
+      "Bash(lsof -ti:8080)",
+      "Bash(xargs kill:*)",
+      "Bash(curl -s \"http://localhost:8080/api/v1/skills/search?q=test&limit=1\")",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }
