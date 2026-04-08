@@ -756,10 +756,11 @@ class LLMClient:
             {
                 "role": "system",
                 "content": (
-                    "You are an expert evaluator of AI Agent Skills. "
-                    "Follow the JSON schema and constraints exactly. "
-                    "Use ONLY the provided metadata, SKILL.md, reference files, and scripts snippets. "
-                    "Return ONLY a valid JSON object. Do not include markdown, explanations, or extra text."
+                    "你是一位AI Agent Skills的专家评估员。"
+                    "严格遵循JSON schema和约束条件。"
+                    "仅使用提供的元数据、SKILL.md、参考文件和脚本片段进行评估。"
+                    "仅返回有效的JSON对象。不要包含markdown格式、解释说明或额外文本。"
+                    "所有评估理由必须使用中文撰写。"
                 )
             },
             {"role": "user", "content": prompt}

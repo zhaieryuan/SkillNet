@@ -318,32 +318,34 @@ Output requirements:
 - Use exactly these keys: safety, completeness, executability, maintainability, cost_awareness.
 - Each key must contain: level (Good/Average/Poor) and reason (1-2 sentences).
 - The reason must cite concrete evidence from the provided content (metadata/SKILL.md/scripts), not imagined details.
+- 【强制要求】所有reason字段的值必须使用简体中文撰写。
 
 Return the evaluation results in JSON format exactly like this:
 {{
   "safety": {{
     "level": "Good/Average/Poor",
-    "reason": "Reason for the rating (1-2 sentences)"
+    "reason": "评级理由（1-2句话，必须使用中文）"
   }},
   "completeness": {{
     "level": "Good/Average/Poor",
-    "reason": "Reason for the rating (1-2 sentences)"
+    "reason": "评级理由（1-2句话，必须使用中文）"
   }},
   "executability": {{
     "level": "Good/Average/Poor",
-    "reason": "Reason for the rating (1-2 sentences)"
+    "reason": "评级理由（1-2句话，必须使用中文）"
   }},
   "maintainability": {{
     "level": "Good/Average/Poor",
-    "reason": "Reason for the rating (1-2 sentences)"
+    "reason": "评级理由（1-2句话，必须使用中文）"
   }},
   "cost_awareness": {{
     "level": "Good/Average/Poor",
-    "reason": "Reason for the rating (1-2 sentences)"
+    "reason": "评级理由（1-2句话，必须使用中文）"
   }}
 }}
 
-Remember: STRICT JSON only. """
+Remember: STRICT JSON only. All reasons MUST be in Simplified Chinese. """
+
 
 
 

@@ -26,7 +26,12 @@
       "Bash(curl -s \"http://localhost:8080/api/v1/skills/search?q=pdf&limit=3\")",
       "Bash(curl -s -X POST http://localhost:8080/api/v1/skills/create/prompt -H 'Content-Type: application/json' -d '{\"prompt\": \"create a test skill for demonstration\"}')",
       "Bash(curl -s \"http://localhost:8080/docs\")",
-      "Bash(curl -s \"http://localhost:8080/openapi.json\")"
+      "Bash(curl -s \"http://localhost:8080/openapi.json\")",
+      "Bash(ls -la /Users/zhai/my_project/pycharm_workspaces/SkillNet/.env*)",
+      "Bash(curl -s \"http://localhost:8080/health\")",
+      "Bash(curl -s \"http://localhost:8010/health\")",
+      "Bash(curl -s -X POST http://localhost:8010/api/v1/skills/create/prompt -H 'Content-Type: application/json' -d '{\"prompt\": \"create a simple test skill\"}')",
+      "Read(//tmp/**)"
     ]
   }
 }

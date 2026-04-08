@@ -19,7 +19,7 @@ class CreatePromptRequest(BaseModel):
 
     prompt: str = Field(..., min_length=10, description="自然语言描述，说明想要创建的技能")
     output_dir: str = Field("./generated_skills", description="生成技能的输出目录")
-    model: str = Field("gpt-4o", description="使用的 LLM 模型")
+    model: str = Field("glm-4-flash", description="使用的 LLM 模型")
 
 
 class CreateGitHubRequest(BaseModel):
@@ -27,7 +27,7 @@ class CreateGitHubRequest(BaseModel):
 
     github_url: str = Field(..., description="GitHub 仓库 URL")
     output_dir: str = Field("./generated_skills", description="生成技能的输出目录")
-    model: str = Field("gpt-4o", description="使用的 LLM 模型")
+    model: str = Field("glm-4-flash", description="使用的 LLM 模型")
     max_files: int = Field(50, ge=1, le=500, description="最大分析文件数")
 
 
@@ -35,14 +35,14 @@ class CreateTrajectoryRequest(BaseModel):
     """从轨迹文件创建技能请求（文件上传模式，用于表单验证）"""
 
     output_dir: str = Field("./generated_skills", description="生成技能的输出目录")
-    model: str = Field("gpt-4o", description="使用的 LLM 模型")
+    model: str = Field("glm-4-flash", description="使用的 LLM 模型")
 
 
 class CreateOfficeRequest(BaseModel):
     """从 Office 文档创建技能请求（文件上传模式，用于表单验证）"""
 
     output_dir: str = Field("./generated_skills", description="生成技能的输出目录")
-    model: str = Field("gpt-4o", description="使用的 LLM 模型")
+    model: str = Field("glm-4-flash", description="使用的 LLM 模型")
 
 
 class EvaluateRequest(BaseModel):
@@ -52,7 +52,7 @@ class EvaluateRequest(BaseModel):
     name: Optional[str] = Field(None, description="技能名称（可选，从目录推断）")
     category: Optional[str] = Field(None, description="技能类别（可选）")
     description: Optional[str] = Field(None, description="技能描述（可选）")
-    model: str = Field("gpt-4o", description="使用的 LLM 模型")
+    model: str = Field("glm-4-flash", description="使用的 LLM 模型")
     max_workers: int = Field(5, ge=1, le=20, description="并行评估的最大线程数")
 
 
@@ -61,4 +61,4 @@ class AnalyzeRequest(BaseModel):
 
     skills_dir: str = Field(..., description="包含多个技能的目录路径")
     save_to_file: bool = Field(True, description="是否保存分析结果到文件")
-    model: str = Field("gpt-4o", description="使用的 LLM 模型")
+    model: str = Field("glm-4-flash", description="使用的 LLM 模型")
