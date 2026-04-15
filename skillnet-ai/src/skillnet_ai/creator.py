@@ -44,7 +44,8 @@ class SkillCreator:
                 model=self.model,
                 messages=messages
             )
-            return response.choices[0].message.content
+            content = response.choices[0].message.content
+            return content if content is not None else ""
         except Exception as e:
             logger.error(f"LLM Call Failed: {e}")
             raise
@@ -100,6 +101,10 @@ class SkillCreator:
 
     def _parse_candidate_metadata(self, llm_output: str) -> List[dict]:
         """Extract JSON from the LLM output tags."""
+        if not llm_output or not str(llm_output).strip():
+            logger.warning("LLM returned empty candidate metadata response.")
+            return []
+        
         try:
             # Look for content between <Skill_Candidate_Metadata> tags
             if "<Skill_Candidate_Metadata>" in llm_output:
@@ -192,6 +197,9 @@ class SkillCreator:
         
         try:
             response = self._get_llm_response(messages)
+            if not response:
+                logger.warning("LLM returned an empty response. No skills created.")
+                return []
             created_files = self._save_github_skill_files(response, output_dir)
             
             # Extract unique skill directories
@@ -240,6 +248,9 @@ class SkillCreator:
         
         try:
             response = self._get_llm_response(messages)
+            if not response:
+                logger.warning("LLM returned an empty response. No skills created.")
+                return []
             created_files = self._save_github_skill_files(response, output_dir)
             
             # Extract unique skill directories
