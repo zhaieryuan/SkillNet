@@ -17,7 +17,7 @@ Search 400,000+ community skills · One-line install · Auto-create from repos /
 [![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-FFD21E)](https://huggingface.co/blog/xzwnlp/skillnet)
 [![Website](https://img.shields.io/badge/🌐_Website-skillnet.openkg.cn-0078D4.svg)](http://skillnet.openkg.cn/)
 
-<p align="center">
+<!-- <p align="center">
   <a href="#-quick-start">Installation</a> •
   <a href="#-python-sdk">Python SDK</a> •
   <a href="#-cli-reference">CLI</a> •
@@ -27,7 +27,7 @@ Search 400,000+ community skills · One-line install · Auto-create from repos /
   <a href="#-contributing">Contributing</a> •
   <a href="https://x.com/_akhaliq/status/2030024322308342160" target="_blank">Featured By AK</a>
 </p>
-</div>
+</div> -->
 
 <h5 align="center"> ⭐ If you like our project, please give us a star on GitHub for the latest updates!</h5>
 
