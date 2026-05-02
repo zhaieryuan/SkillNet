@@ -17,7 +17,7 @@ Search 400,000+ community skills · One-line install · Auto-create from repos /
 [![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-FFD21E)](https://huggingface.co/blog/xzwnlp/skillnet)
 [![Website](https://img.shields.io/badge/🌐_Website-skillnet.openkg.cn-0078D4.svg)](http://skillnet.openkg.cn/)
 
-<p align="center">
+<!-- <p align="center">
   <a href="#-quick-start">Installation</a> •
   <a href="#-python-sdk">Python SDK</a> •
   <a href="#-cli-reference">CLI</a> •
@@ -26,13 +26,17 @@ Search 400,000+ community skills · One-line install · Auto-create from repos /
   <a href="https://huggingface.co/blog/xzwnlp/skillnet">HuggingFace</a> •
   <a href="#-contributing">Contributing</a> •
   <a href="https://x.com/_akhaliq/status/2030024322308342160" target="_blank">Featured By AK</a>
-</p>
+</p> -->
+
 </div>
+
+<h5 align="center"> ⭐ If you like our project, please give us a star on GitHub for the latest updates!</h5>
 
 ---
 
 **SkillNet** is an open-source platform that treats AI agent skills as first-class, shareable packages — like npm for AI capabilities. It provides end-to-end tooling to **search**, **install**, **create**, **evaluate**, and **organize** skills, so agents can learn from the community and continuously grow.
 
+- We conducted experiments on ALFWorld, WebShop, and ScienceWorld. Reproduction scripts are provided [here](https://github.com/zjunlp/SkillNet/tree/main/experiments).
 ![graph-ezgif com-optimize](https://github.com/user-attachments/assets/1d27d046-48a1-4ab2-a6f5-58c8fa07a134)
 
 
@@ -369,6 +373,9 @@ SkillNet integrates with [OpenClaw](https://github.com/openclaw/openclaw) as a b
 
 > Community skills guide execution → successful outcomes become new skills → periodic analysis keeps the library clean.
 
+<details>
+<summary><b>📡 Full Usage Reference</b></summary>
+    
 ### 📥 Installation
 
 **Prerequisites:** [OpenClaw](https://github.com/openclaw/openclaw) installed (default workspace: `~/.openclaw/workspace`)
@@ -430,6 +437,8 @@ Create a skill from this GitHub repo: https://github.com/owner/repo (then evalua
 
 > The skill source is also available at [`skills/skillnet/`](skills/skillnet/) for reference.
 
+</details>
+
 ---
 
 ## 🔌 Model Context Protocol (MCP) Integration
@@ -437,6 +446,9 @@ Create a skill from this GitHub repo: https://github.com/owner/repo (then evalua
 The **SkillNet MCP Server** (maintained by [CycleChain](https://github.com/CycleChain)) is a high-performance bridge that enables AI agents (such as Claude Desktop, Cursor, Antigravity and Windsurf) to interact with the SkillNet ecosystem using the [Model Context Protocol](https://modelcontextprotocol.io/).
 
 It empowers agents to autonomously search, download, create, and evaluate 300,000+ specialized skills directly within your IDE or desktop environment.
+
+<details>
+<summary><b>📡 Full Usage Reference</b></summary>
 
 ### Installation Options
 
@@ -506,6 +518,8 @@ _(Then, replace `fmdogancan/skillnet-mcp:latest` with `skillnet-mcp-local` in th
 
 * `API_KEY`: Your API key
 * `GITHUB_TOKEN`: GitHub token for private repositories
+
+</details>
 
 ---
 
