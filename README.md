@@ -82,6 +82,14 @@ Search 400,000+ community skills · One-line install · Auto-create from repos /
 pip install skillnet-ai
 ```
 
+Or using `uv`:
+
+```bash
+uv venv
+source .venv/bin/activate
+uv pip install skillnet-ai
+```
+
 ```python
 from skillnet_ai import SkillNetClient
 
